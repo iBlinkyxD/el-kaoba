@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, createContext, useContext } from "react";
 /* ══════════════════════════════════════════════════════
    THEME SYSTEM
    ══════════════════════════════════════════════════════ */
-const ThemeCtx = createContext();
+const ThemeCtx = createContext<any>(undefined);
 const useTheme = () => useContext(ThemeCtx);
 
 const themes = {
@@ -136,21 +136,21 @@ function R({ children, delay = 0, style = {} }) {
 const fd = { fontFamily: "'Cormorant Garamond',serif" };
 const fb = { fontFamily: "'Outfit',sans-serif" };
 
-function Btn({ children, onClick, outline, sm, full }) {
+function Btn({ children, onClick, outline = false, sm = false, full = false }) {
   return <button className={`btn ${sm ? "btn-sm" : ""} ${outline ? "btn-out" : "btn-fill"}`} onClick={onClick} style={full ? { width: "100%" } : {}}>{children}</button>;
 }
 
-function Label({ children, center }) {
+function Label({ children, center = false }) {
   const th = useTheme();
   return <div style={{ ...fb, fontSize: 11, letterSpacing: ".25em", textTransform: "uppercase", color: th.g, marginBottom: 14, fontWeight: 500, textAlign: center ? "center" : undefined }}>{children}</div>;
 }
 
-function Title({ children, center }) {
+function Title({ children, center = false }) {
   const th = useTheme();
   return <h2 className="hero-t" style={{ ...fd, fontSize: "clamp(30px,5vw,56px)", fontWeight: 300, color: th.t1, lineHeight: 1.1, margin: "0 0 20px", textAlign: center ? "center" : undefined, transition: "color .5s" }}>{children}</h2>;
 }
 
-function Body({ children, center, style: s = {} }) {
+function Body({ children, center = false, style: s = {} }) {
   const th = useTheme();
   return <p style={{ ...fb, fontSize: 15, color: th.t2, lineHeight: 1.8, fontWeight: 300, textAlign: center ? "center" : undefined, transition: "color .5s", ...s }}>{children}</p>;
 }
@@ -198,7 +198,7 @@ function Quote({ text, name, role }) {
   </div>;
 }
 
-function Field({ label, type = "text", value, onChange, placeholder, options, rows }) {
+function Field({ label, type = "text", value, onChange, placeholder = "", options = undefined, rows = undefined }) {
   const th = useTheme();
   return <div style={{ marginBottom: 18 }}>
     <label style={{ display: "block", ...fb, fontSize: 10, letterSpacing: ".15em", textTransform: "uppercase", color: th.t2, marginBottom: 7, fontWeight: 500 }}>{label}</label>
@@ -209,7 +209,7 @@ function Field({ label, type = "text", value, onChange, placeholder, options, ro
 }
 
 /* ── PAGE HERO ────────────────────────────────────────── */
-function PageHero({ label, title, sub, img, price, priceNote, children }) {
+function PageHero({ label, title, sub, img, price = undefined, priceNote = undefined, children = null }) {
   const th = useTheme();
   return <div style={{ position: "relative", minHeight: "85vh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
     <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${img})`, backgroundSize: "cover", backgroundPosition: "center", filter: `brightness(${th.heroFilter}) saturate(${th.heroBright})`, transition: "filter .5s" }} />
